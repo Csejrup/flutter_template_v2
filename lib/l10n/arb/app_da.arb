@@ -1,0 +1,10 @@
+{
+  "@@locale": "da",
+  "counterAppBarTitle": "Tæller",
+  "@counterAppBarTitle": {
+    "description": "Tekst vist i AppBar på Tæller-siden"
+  },
+  "invalidEmail": "Ugyldig e-mailadresse",
+  "invalidPassword": "Adgangskoden skal være mindst 8 tegn og indeholde mindst et bogstav og et nummer",
+  "confirmPasswordMismatch": "Bekræftelse af adgangskode matcher ikke"
+}

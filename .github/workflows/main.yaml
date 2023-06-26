@@ -1,0 +1,59 @@
+name: template
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+  pull_request:
+    branches:
+      - master
+      - staging
+      - develop
+
+jobs:
+  semantic-pull-request:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  build:
+    defaults:
+      run:
+        working-directory: "."
+
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v3
+        name: 📚 Git Checkout
+
+      - uses: subosito/flutter-action@v2
+        name: 🐦 Setup Flutter
+        with:
+          flutter-version: 3.10.3
+          channel: stable
+          cache: true
+
+      - run: |
+          flutter pub global activate very_good_cli
+          very_good --analytics false
+          very_good packages get --recursive
+        name: 📦 Install Dependencies
+
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+        name: 🧬 Generate Code
+
+      - run: dart format --set-exit-if-changed lib test
+        name: ✨ Check Formatting
+
+      - run: flutter analyze lib test
+        name: 🕵️ Analyze
+
+      - run: very_good test -j 4 --optimization --coverage --test-randomize-ordering-seed random
+        name: 🧪 Run Tests
+
+    #  - uses: VeryGoodOpenSource/very_good_coverage@v1
+    #    name: 📊 Check Code Coverage
+    #    with:
+    #      path: ./coverage/lcov.info
+    #      exclude: "*.g.dart *.freezed.dart *.config.dart *.gen.dart"
+    #      min_coverage: 60
