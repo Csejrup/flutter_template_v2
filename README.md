@@ -182,7 +182,7 @@ lib
 ├── l10n
 │   ├── arb
 │   │   ├── app_en.arb                  # English Translation
-│   │   └── app_id.arb                  # Indonesian Translation
+│   │   └── app_da.arb                  # Danish Translation
 ├── bootstrap.dart                      # Common Main Bootstrap Script
 ├── main_development.dart               # Env Development main method
 ├── main_production.dart                # Env Production main method
